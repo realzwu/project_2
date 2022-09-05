@@ -1,11 +1,15 @@
-setwd("/Users/zd821/Documents/project2/TCGA")
-### sort ECM genes
+## For Figure 6A 6B
+
+setwd("")
+
+### sort four favourable gene sets
 library(survival)
 library(openxlsx)
 myfile <- "FBLN1.txt"
 genes <- read.delim(myfile)[,1]
+## genes = "DKK3" "FBLN1" "ANGPT1" "DPT" "FREM2"
 
-rna.data_ <- read.xlsx("TCGA_tpm_sampleID_fake.xlsx",rowNames = T, colNames = F)
+rna.data_ <- read.xlsx("TCGA_tpm.xlsx",rowNames = T, colNames = F)
 clinical = rna.data_[,c(1:3)]
 rna.data3 = t(rna.data_) 
 rna.data3 = rna.data3 %>% as.data.frame %>% filter(sample %in% genes)
@@ -14,7 +18,7 @@ rna.data3 = as.data.frame(cbind(rna.data3[,3],rna.data3[,5],rna.data3[,7],rna.da
 colnames(rna.data3) = rna.data3[1,]
 rna.data3 = rna.data3[-1,]
 
-### draw GGally
+### draw correlation matrix
 library(GGally)
 library(forcats)
 rna.data3[,1] = as.character(rna.data3[,1])
